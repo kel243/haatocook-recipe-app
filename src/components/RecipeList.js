@@ -1,8 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import Recipe from "./Recipe";
 
-const RecipeList = () => {
-  return <ListStyle></ListStyle>;
+const RecipeList = ({ recipes, setCurrentRecipe, currentRecipe }) => {
+  return (
+    <ListStyle>
+      {recipes.map((recipe) => (
+        <Recipe
+          setCurrentRecipe={setCurrentRecipe}
+          recipe={recipe.recipe}
+          key={recipe.recipe.uri}
+          currentRecipe={currentRecipe}
+        >
+          {recipe.recipe.label}
+        </Recipe>
+      ))}
+    </ListStyle>
+  );
 };
 
 const ListStyle = styled.div`
