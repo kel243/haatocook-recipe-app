@@ -107,6 +107,11 @@ const ViewerStyle = styled.div`
   max-width: 75%;
   background: white;
 
+  h1 {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
   @media (max-width: 768px) {
     max-width: 100%;
   }

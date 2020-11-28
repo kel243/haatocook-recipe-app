@@ -70,6 +70,12 @@ const RecipesBtn = styled.button`
   border-radius: 5px;
   z-index: 5;
   display: none;
+  transition: all 0.2s ease;
+
+  :hover {
+    background: #171c23;
+    color: #fefbfc;
+  }
 
   @media (max-width: 768px) {
     display: inline-block;
