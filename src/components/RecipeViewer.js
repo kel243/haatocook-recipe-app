@@ -1,19 +1,13 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import TopBar from "./TopBar";
 import styled from "styled-components";
 import emptyHeart from "../img/empty-heart.png";
 import heart from "../img/heart.png";
+import { FavContext } from "../contexts/favoritesContext";
 
-const RecipeViewer = ({ currentRecipe, setCurrentRecipe }) => {
-  const [favorites, setFavorites] = useState([]);
+const RecipeViewer = ({ currentRecipe, setCurrentRecipe, barRef }) => {
   const heartRef = useRef(null);
-
-  useEffect(() => {
-    if (localStorage.getItem("favorites")) {
-      const storedFav = localStorage.getItem("favorites");
-      setFavorites(JSON.parse(storedFav));
-    }
-  }, []);
+  const { favorites, dispatch } = useContext(FavContext);
 
   useEffect(() => {
     if (heartRef.current) heartRef.current.src = emptyHeart;
@@ -41,28 +35,27 @@ const RecipeViewer = ({ currentRecipe, setCurrentRecipe }) => {
     if (heartRef.current.src === emptyHeart) {
       heartRef.current.src = heart;
       if (favorites.length > 0) {
-        setFavorites([...favorites, currentRecipe]);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        dispatch({ type: "ADD_FAV", recipe: currentRecipe });
       } else {
-        setFavorites([currentRecipe]);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        dispatch({ type: "ADD_FAV", recipe: currentRecipe });
       }
     } else {
       heartRef.current.src = emptyHeart;
       let arr = favorites;
       const index = findUnfavorite(arr);
       arr = arr.splice(index, 1);
-      setFavorites(
-        favorites.filter((favorite) => favorite.uri !== currentRecipe.uri)
-      );
-      localStorage.setItem("favorites", JSON.stringify(favorites));
+      dispatch({ type: "REMOVE_FAV", recipe: currentRecipe });
     }
   };
 
   if (currentRecipe) {
     return (
       <ViewerStyle>
-        <TopBar favorites={favorites} setCurrentRecipe={setCurrentRecipe} />
+        <TopBar
+          favorites={favorites}
+          setCurrentRecipe={setCurrentRecipe}
+          barRef={barRef}
+        />
         <RecipeBoxStyle>
           <ImgStyle src={currentRecipe.image} />
           <Description>
@@ -72,16 +65,30 @@ const RecipeViewer = ({ currentRecipe, setCurrentRecipe }) => {
                 <img ref={heartRef} src={emptyHeart} alt="Favorite Heart" />
               </FavButton>
             </Title>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-            similique qui impedit fugit quidem? Provident quasi non fugit
-            aliquid unde dolore dignissimos adipisci quo in maxime, quaerat
-            ducimus cupiditate. Aut. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Harum similique qui impedit fugit quidem?
-            Provident quasi non fugit aliquid unde dolore dignissimos adipisci
-            quo in maxime, quaerat ducimus cupiditate. Aut. Lorem ipsum dolor
-            sit amet consectetur adipisicing elit. Harum similique qui impedit
-            fugit quidem? Provident quasi non fugit aliquid unde dolore
-            dignissimos adipisci quo in maxime, quaerat ducimus cupiditate. Aut.
+            <RecipeDetails>
+              <RecipeInfo>
+                <p>Servings: {currentRecipe.yield}</p>
+                <p>Calories: {+currentRecipe.calories.toFixed(0)}</p>
+                {currentRecipe.dietLabels.map((label, index) => (
+                  <p key={`dietlabel-${index}`}>{label}</p>
+                ))}
+              </RecipeInfo>
+              <RecipeInfo>
+                {currentRecipe.healthLabels.map((label, index) => (
+                  <HealthLabel key={`healthlabel-${index}`}>
+                    {label}
+                  </HealthLabel>
+                ))}
+              </RecipeInfo>
+            </RecipeDetails>
+            <IngredientsList>
+              <h3>Ingredients:</h3>
+              {currentRecipe.ingredientLines.map((ingredient, index) => (
+                <li key={`ingredient-${index}`}>
+                  <span>&#9679;</span> {ingredient}
+                </li>
+              ))}
+            </IngredientsList>
           </Description>
         </RecipeBoxStyle>
       </ViewerStyle>
@@ -101,6 +108,10 @@ const ViewerStyle = styled.div`
   width: 100%;
   max-width: 75%;
   background: white;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const RecipeBoxStyle = styled.div`
@@ -116,6 +127,7 @@ const ImgStyle = styled.img`
   height: 70%;
   width: 100%;
   background-size: cover;
+  background-position: center;
 `;
 
 const Description = styled.div`
@@ -142,6 +154,56 @@ const FavButton = styled.button`
 
   img {
     height: 30px;
+  }
+`;
+
+const RecipeDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #ffe1ac;
+  padding: 1rem 0.2rem 0 0.2rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+`;
+
+const RecipeInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  p {
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+`;
+
+const HealthLabel = styled.p`
+  border: 2px solid black;
+  padding: 1px 4px;
+  border-radius: 5px;
+  color: white;
+  background: #cb3e4d;
+`;
+
+const IngredientsList = styled.ul`
+  width: 100%;
+  font-size: 1.2rem;
+  list-style: none;
+
+  h3 {
+    color: #cb3e4d;
+    margin-bottom: 0.3rem;
+  }
+
+  li {
+    padding: 0.5rem 0;
+
+    span {
+      color: #cb3e4d;
+    }
   }
 `;
 

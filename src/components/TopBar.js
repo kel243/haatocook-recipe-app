@@ -3,11 +3,12 @@ import FavoriteList from "./FavoriteList";
 import styled from "styled-components";
 import yellowHeart from "../img/yellow-heart.png";
 
-const TopBar = ({ favorites, setCurrentRecipe }) => {
-  const [listActive, setListActive] = useState(false);
+const TopBar = ({ favorites, setCurrentRecipe, barRef }) => {
+  const [listActive, setListActive] = useState(true);
+  const [repActive, setRepActive] = useState(false);
   const listRef = useRef(null);
 
-  const clickHandler = () => {
+  const favClickHandler = () => {
     setListActive(!listActive);
     if (listActive) {
       listRef.current.style.height = "300px";
@@ -18,11 +19,22 @@ const TopBar = ({ favorites, setCurrentRecipe }) => {
     }
   };
 
+  const repClickHandler = () => {
+    if (!repActive) {
+      barRef.current.classList.toggle("barShow");
+      setRepActive(true);
+    } else {
+      barRef.current.classList.toggle("barShow");
+      setRepActive(false);
+    }
+  };
+
   return (
     <BarStyle>
       <p className="title">HaatoCook</p>
+      <RecipesBtn onClick={repClickHandler}>Recipes</RecipesBtn>
       <FavsBtnContainer>
-        <button onClick={clickHandler}>
+        <button onClick={favClickHandler}>
           <img src={yellowHeart} alt="Favorites button"></img>
         </button>
         <FavoriteList
@@ -47,6 +59,22 @@ const BarStyle = styled.div`
     color: white;
     font-size: 2.5rem;
     padding: 0 2rem;
+  }
+`;
+
+const RecipesBtn = styled.button`
+  color: #cb3e4d;
+  font-size: 1.2rem;
+  padding: 2px 5px;
+  background: #fefbfc;
+  border: 2px solid #171c23;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 5;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: inline-block;
   }
 `;
 

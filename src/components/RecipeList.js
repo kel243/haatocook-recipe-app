@@ -5,11 +5,11 @@ import Recipe from "./Recipe";
 const RecipeList = ({ recipes, setCurrentRecipe, currentRecipe }) => {
   return (
     <ListStyle>
-      {recipes.map((recipe) => (
+      {recipes.map((recipe, index) => (
         <Recipe
           setCurrentRecipe={setCurrentRecipe}
           recipe={recipe.recipe}
-          key={recipe.recipe.uri}
+          key={`${recipe.recipe.label}-${index}`}
           currentRecipe={currentRecipe}
         >
           {recipe.recipe.label}

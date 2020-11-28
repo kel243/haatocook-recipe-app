@@ -34,5 +34,19 @@ const GlobalStyles = createGlobalStyle`
     .active {
         background: #f2ebea;
     }
+
+    .barHidden {
+        transform: translateX(0%);
+    }
+
+    @media (max-width: 768px) {
+        .barHidden {
+            transform: translateX(-100%);
+        }
+
+        .barShow {
+            transform: translateX(0%);
+        }
+    }
 `;
 export default GlobalStyles;

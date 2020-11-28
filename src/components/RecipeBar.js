@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import RecipeList from "./RecipeList";
 
-const RecipeBar = ({ setCurrentRecipe, currentRecipe }) => {
+const RecipeBar = ({ setCurrentRecipe, currentRecipe, barRef }) => {
   const [recipes, setRecipes] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -21,7 +21,7 @@ const RecipeBar = ({ setCurrentRecipe, currentRecipe }) => {
   };
 
   return (
-    <RecipeListStyle>
+    <RecipeListStyle className="barHidden" ref={barRef}>
       <SearchContainer>
         <SearchBar
           type="text"
@@ -48,6 +48,16 @@ const RecipeListStyle = styled.div`
   width: 100%;
   max-width: 25%;
   background: #fefbfc;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    transform: translateX(-100%);
+    z-index: 3;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -67,6 +77,11 @@ const SearchBar = styled.input`
   padding: 3px 5px;
   border-radius: 3px;
   font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    width: 40%;
+    left: 30%;
+  }
 `;
 
 const RecipeBarBottom = styled.div`
