@@ -53,7 +53,6 @@ const RecipeListStyle = styled.div`
     top: 0;
     left: 0;
     max-width: 100%;
-    transform: translateX(-100%);
     z-index: 3;
   }
 `;
