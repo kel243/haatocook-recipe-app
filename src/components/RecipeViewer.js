@@ -6,7 +6,7 @@ import heart from "../img/heart.png";
 import { FavContext } from "../contexts/favoritesContext";
 import { CurrRecipeContext } from "../contexts/currRecipeContext";
 
-const RecipeViewer = ({ barRef }) => {
+const RecipeViewer = () => {
   const heartRef = useRef(null);
   const { favorites, dispatch } = useContext(FavContext);
   const { currentRecipe } = useContext(CurrRecipeContext);
@@ -53,7 +53,7 @@ const RecipeViewer = ({ barRef }) => {
   if (Object.keys(currentRecipe).length !== 0) {
     return (
       <ViewerStyle>
-        <TopBar barRef={barRef} />
+        <TopBar />
         <RecipeBoxStyle>
           <ImgStyle src={currentRecipe.image} />
           <Description>

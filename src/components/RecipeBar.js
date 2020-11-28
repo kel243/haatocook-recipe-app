@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import RecipeList from "./RecipeList";
+import { BarRefContext } from "../contexts/barRefContext";
 
-const RecipeBar = ({ barRef }) => {
+const RecipeBar = () => {
   const [recipes, setRecipes] = useState([]);
   const [query, setQuery] = useState("");
+  const { barRef } = useContext(BarRefContext);
 
   const endpoint = `https://api.edamam.com/search?q=${query}&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}&from=0&to=20`;
 

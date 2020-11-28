@@ -1,24 +1,25 @@
-import React, { useRef } from "react";
+import React from "react";
 import GlobalStyles from "./components/GlobalStyles";
 import RecipeBar from "./components/RecipeBar";
 import RecipeViewer from "./components/RecipeViewer";
 import styled from "styled-components";
 import { FavProvider } from "./contexts/favoritesContext";
 import { CurrRecipeProvider } from "./contexts/currRecipeContext";
+import { BarRefProvider } from "./contexts/barRefContext";
 
 function App() {
-  const barRef = useRef(null);
-
   return (
-    <CurrRecipeProvider>
-      <FavProvider>
-        <MainApp>
-          <GlobalStyles />
-          <RecipeBar barRef={barRef} />
-          <RecipeViewer barRef={barRef} />
-        </MainApp>
-      </FavProvider>
-    </CurrRecipeProvider>
+    <BarRefProvider>
+      <CurrRecipeProvider>
+        <FavProvider>
+          <MainApp>
+            <GlobalStyles />
+            <RecipeBar />
+            <RecipeViewer />
+          </MainApp>
+        </FavProvider>
+      </CurrRecipeProvider>
+    </BarRefProvider>
   );
 }
 

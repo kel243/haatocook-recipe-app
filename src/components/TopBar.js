@@ -1,11 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import FavoriteList from "./FavoriteList";
 import styled from "styled-components";
 import yellowHeart from "../img/yellow-heart.png";
+import { BarRefContext } from "../contexts/barRefContext";
 
-const TopBar = ({ barRef }) => {
+const TopBar = () => {
   const [listActive, setListActive] = useState(true);
   const [repActive, setRepActive] = useState(false);
+  const { barRef } = useContext(BarRefContext);
   const listRef = useRef(null);
 
   const favClickHandler = () => {
