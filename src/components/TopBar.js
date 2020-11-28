@@ -3,7 +3,7 @@ import FavoriteList from "./FavoriteList";
 import styled from "styled-components";
 import yellowHeart from "../img/yellow-heart.png";
 
-const TopBar = ({ favorites, setCurrentRecipe, barRef }) => {
+const TopBar = ({ barRef }) => {
   const [listActive, setListActive] = useState(true);
   const [repActive, setRepActive] = useState(false);
   const listRef = useRef(null);
@@ -37,11 +37,7 @@ const TopBar = ({ favorites, setCurrentRecipe, barRef }) => {
         <button onClick={favClickHandler}>
           <img src={yellowHeart} alt="Favorites button"></img>
         </button>
-        <FavoriteList
-          favorites={favorites}
-          listRef={listRef}
-          setCurrentRecipe={setCurrentRecipe}
-        />
+        <FavoriteList listRef={listRef} />
       </FavsBtnContainer>
     </BarStyle>
   );

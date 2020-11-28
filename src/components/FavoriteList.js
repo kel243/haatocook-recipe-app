@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import Favorite from "./Favorite";
 import { FavContext } from "../contexts/favoritesContext";
+import { CurrRecipeContext } from "../contexts/currRecipeContext";
 
-const FavoriteList = ({ listRef, setCurrentRecipe }) => {
+const FavoriteList = ({ listRef }) => {
   let content;
   const { favorites } = useContext(FavContext);
+  const { setCurrentRecipe } = useContext(CurrRecipeContext);
 
   if (favorites) {
     content = (

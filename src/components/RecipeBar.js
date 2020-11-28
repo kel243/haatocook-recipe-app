@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import RecipeList from "./RecipeList";
 
-const RecipeBar = ({ setCurrentRecipe, currentRecipe, barRef }) => {
+const RecipeBar = ({ barRef }) => {
   const [recipes, setRecipes] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -31,11 +31,7 @@ const RecipeBar = ({ setCurrentRecipe, currentRecipe, barRef }) => {
           onKeyPress={enterHandler}
         />
       </SearchContainer>
-      <RecipeList
-        setCurrentRecipe={setCurrentRecipe}
-        currentRecipe={currentRecipe}
-        recipes={recipes}
-      />
+      <RecipeList recipes={recipes} />
       <RecipeBarBottom>
         <p>{recipes.length} Results Found</p>
       </RecipeBarBottom>

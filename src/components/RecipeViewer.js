@@ -4,14 +4,16 @@ import styled from "styled-components";
 import emptyHeart from "../img/empty-heart.png";
 import heart from "../img/heart.png";
 import { FavContext } from "../contexts/favoritesContext";
+import { CurrRecipeContext } from "../contexts/currRecipeContext";
 
-const RecipeViewer = ({ currentRecipe, setCurrentRecipe, barRef }) => {
+const RecipeViewer = ({ barRef }) => {
   const heartRef = useRef(null);
   const { favorites, dispatch } = useContext(FavContext);
+  const { currentRecipe } = useContext(CurrRecipeContext);
 
   useEffect(() => {
     if (heartRef.current) heartRef.current.src = emptyHeart;
-    if (favorites && currentRecipe) {
+    if (favorites && currentRecipe && heartRef.current) {
       for (let i = 0; i < favorites.length; i++) {
         if (favorites[i].uri === currentRecipe.uri) {
           heartRef.current.src = heart;
@@ -48,14 +50,10 @@ const RecipeViewer = ({ currentRecipe, setCurrentRecipe, barRef }) => {
     }
   };
 
-  if (currentRecipe) {
+  if (Object.keys(currentRecipe).length !== 0) {
     return (
       <ViewerStyle>
-        <TopBar
-          favorites={favorites}
-          setCurrentRecipe={setCurrentRecipe}
-          barRef={barRef}
-        />
+        <TopBar barRef={barRef} />
         <RecipeBoxStyle>
           <ImgStyle src={currentRecipe.image} />
           <Description>

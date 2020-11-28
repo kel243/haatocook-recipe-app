@@ -1,30 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import GlobalStyles from "./components/GlobalStyles";
 import RecipeBar from "./components/RecipeBar";
 import RecipeViewer from "./components/RecipeViewer";
 import styled from "styled-components";
 import { FavProvider } from "./contexts/favoritesContext";
+import { CurrRecipeProvider } from "./contexts/currRecipeContext";
 
 function App() {
-  const [currentRecipe, setCurrentRecipe] = useState();
   const barRef = useRef(null);
 
   return (
-    <FavProvider>
-      <MainApp>
-        <GlobalStyles />
-        <RecipeBar
-          barRef={barRef}
-          setCurrentRecipe={setCurrentRecipe}
-          currentRecipe={currentRecipe}
-        />
-        <RecipeViewer
-          barRef={barRef}
-          currentRecipe={currentRecipe}
-          setCurrentRecipe={setCurrentRecipe}
-        />
-      </MainApp>
-    </FavProvider>
+    <CurrRecipeProvider>
+      <FavProvider>
+        <MainApp>
+          <GlobalStyles />
+          <RecipeBar barRef={barRef} />
+          <RecipeViewer barRef={barRef} />
+        </MainApp>
+      </FavProvider>
+    </CurrRecipeProvider>
   );
 }
 

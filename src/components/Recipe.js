@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
+import { CurrRecipeContext } from "../contexts/currRecipeContext";
 
-const Recipe = ({ recipe, setCurrentRecipe, currentRecipe }) => {
+const Recipe = ({ recipe }) => {
   const [active, setActive] = useState(false);
+  const { currentRecipe, setCurrentRecipe } = useContext(CurrRecipeContext);
 
   useEffect(() => {
     if (currentRecipe && recipe.uri === currentRecipe.uri) {
