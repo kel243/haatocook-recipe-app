@@ -27,7 +27,7 @@ const RecipeViewer = ({ currentRecipe, setCurrentRecipe }) => {
         }
       }
     }
-  }, [currentRecipe]);
+  }, [currentRecipe, favorites]);
 
   const findUnfavorite = (arr) => {
     for (let i = 0; i < arr.length; i++) {
