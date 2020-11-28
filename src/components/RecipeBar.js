@@ -36,7 +36,9 @@ const RecipeBar = ({ setCurrentRecipe, currentRecipe }) => {
         currentRecipe={currentRecipe}
         recipes={recipes}
       />
-      <RecipeBarBottom />
+      <RecipeBarBottom>
+        <p>{recipes.length} Results Found</p>
+      </RecipeBarBottom>
     </RecipeListStyle>
   );
 };
@@ -71,6 +73,13 @@ const RecipeBarBottom = styled.div`
   height: 5%;
   width: 100%;
   background: #ffe1ac;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-weight: 700;
+  }
 `;
 
 export default RecipeBar;
