@@ -5,14 +5,14 @@ import yellowHeart from "../img/yellow-heart.png";
 import { BarRefContext } from "../contexts/barRefContext";
 
 const TopBar = () => {
-  const [listActive, setListActive] = useState(true);
+  const [listActive, setListActive] = useState(false);
   const [repActive, setRepActive] = useState(false);
   const { barRef } = useContext(BarRefContext);
   const listRef = useRef(null);
 
   const favClickHandler = () => {
     setListActive(!listActive);
-    if (listActive) {
+    if (!listActive) {
       listRef.current.style.height = "300px";
       listRef.current.style.width = "200px";
     } else {
@@ -25,6 +25,11 @@ const TopBar = () => {
     if (!repActive) {
       barRef.current.classList.toggle("barShow");
       setRepActive(true);
+      if (listActive) {
+        listRef.current.style.height = "0px";
+        listRef.current.style.width = "0px";
+        setListActive(!listActive);
+      }
     } else {
       barRef.current.classList.toggle("barShow");
       setRepActive(false);

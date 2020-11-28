@@ -42,6 +42,7 @@ const FavListStyle = styled.div`
   border-radius: 5px;
   overflow: auto;
   transition: all 0.2s ease;
+  z-index: 10;
 
   span {
     font-size: 1.2rem;
