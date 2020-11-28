@@ -62,6 +62,10 @@ const BarStyle = styled.div`
     color: white;
     font-size: 2.5rem;
     padding: 0 2rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+    }
   }
 `;
 
@@ -92,6 +96,14 @@ const FavsBtnContainer = styled.div`
   height: 35px;
   margin-right: 3rem;
   position: relative;
+
+  @media (max-width: 768px) {
+    margin-right: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-right: 1.5rem;
+  }
 
   button {
     width: 35px;

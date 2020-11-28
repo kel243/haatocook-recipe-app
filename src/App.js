@@ -38,11 +38,14 @@ const MainApp = styled.div`
   margin: 0 auto;
 
   @media (max-width: 768px) {
+    max-height: 90vh;
     max-width: 80%;
   }
 
   @media (max-width: 480px) {
+    max-height: 100vh;
     max-width: 100%;
+    border-radius: 0;
   }
 `;
 
