@@ -12,7 +12,7 @@ const Recipe = ({ recipe }) => {
     } else {
       setActive(false);
     }
-  });
+  }, [currentRecipe, recipe.uri]);
 
   return (
     <RecipeStyle
